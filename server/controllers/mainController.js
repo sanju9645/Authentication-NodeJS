@@ -1,13 +1,13 @@
-const Quote = require('inspirational-quotes');
+const utils = require('../../lib/utils');
+const constants = require('../../lib/constants');
 
 const index_get = async (req, res) => {
   try {
-    const quote  = Quote.getQuote();
     const locals = {
-      title: "Login",
-      description: "Node.js User Authentication",
-      loginPageHeading: quote.text ,
-      loginPageSubHeading: quote.author 
+      title       : constants.LOGIN_PAGE_TITLE,
+      description : constants.LOGIN_PAGE_DESCRIPTION,
+      quote       : utils.getQuotes().text ,
+      author      : utils.getQuotes().author 
     }
 
     res.render('login', { locals });
