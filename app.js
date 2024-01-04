@@ -3,7 +3,6 @@ const cors = require('cors');
 const connectDB =  require('./server/config/database');
 const cookieParser = require('cookie-parser');
 const path = require('path');
-const utils = require('./lib/utils');
 const { errorHandler } = require('./lib/errorHandler');
 const expressLayout = require('express-ejs-layouts');
 
@@ -26,10 +25,9 @@ connectDB();
 // Instead of using body-parser middleware, use the new Express implementation of the same thing
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
+app.use(express.static('public'));
 app.use(cookieParser());
 app.use(cors());
-
-app.use(express.static('public'));
 
 // Templating engine
 app.use(expressLayout);
@@ -44,7 +42,6 @@ app.set('views', path.join(__dirname, 'views'));
  */
 // app.use(require('./server/routes'));
 app.use('/', require('./server/routes/main'));
-
 
 app.use(errorHandler);
 
