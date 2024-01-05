@@ -1,0 +1,14 @@
+:root {
+  --cursive: cursive;
+  --serif: serif;
+}
+
+
+
+/* Error Handler Page */
+.login-page-quote {
+  font-family: var(--cursive);
+}
+.login-page-author {
+  font-family: var(--serif);
+}
