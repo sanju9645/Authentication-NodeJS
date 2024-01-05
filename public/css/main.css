@@ -4,11 +4,15 @@
 }
 
 
+/* Index Page */
+.index-page {
+  background-image: url(/img/index.jpeg);
+}
 
-/* Error Handler Page */
 .login-page-quote {
   font-family: var(--cursive);
 }
+
 .login-page-author {
   font-family: var(--serif);
 }
