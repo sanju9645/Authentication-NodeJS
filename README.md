@@ -6,7 +6,7 @@ Authentication - JWT and  Google oauth20 using Passport JS
    Run the command: npm init -y
 
 2. Install Magic Ingredients:
-   Execute: npm i body-parser connect-mongo dotenv express express-ejs-layouts express-session mongoose passport passport-jwt cors cookie-parser bcrypt google-auth-library ejs passport-google-oauth20 jsonwebtoken path inspirational-quotes
+   Execute: npm i body-parser connect-mongo dotenv express express-ejs-layouts express-session mongoose passport passport-jwt cors cookie-parser bcrypt google-auth-library ejs passport-google-oauth20 jsonwebtoken path inspirational-quotes crypto fs
 
 3. Equip Your Developers:
    Install Nodemon as a sidekick: npm i nodemon --save-dev
@@ -72,3 +72,47 @@ MONGODB_URI=mongodb+srv://{username}:{password}@cluster0.lo3cgvx.mongodb.net/{da
 
 20. Controller Functions (server/controllers):
     🎮 Define controller functions for various tasks.
+
+
+
+
+
+-------------------------------------------------
+Passport-JWT Implementation
+-------------------------------------------------
+
+1. Create User schema in server/models/User.js
+
+2. Load the models on app.js
+    require('./server/models/User');
+
+    Now the schema will be created on MongoDB
+
+3. Create new script generateKeypair.js on 'tools' folder
+
+4. create a 'keys' folder on the 'tools' folder
+
+5. Run it by 
+    node tools/generateKeypair
+
+6. Add both keys on .gitignore
+    tools/keys/id_rsa_priv.pem
+    tools/keys/id_rsa_pub.pem
+
+
+-------------------------------------------------
+Production
+-------------------------------------------------
+
+npm i
+
+create the .env file
+
+run 
+node tools/generateKeypair
+
+
+I have a file on path tools/keys/id_rsa_priv.pem
+I need to avoid pushing this file
+how to add this in gitignore
+but I need to push the folder tools/keys/

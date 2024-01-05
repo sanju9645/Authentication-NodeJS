@@ -22,6 +22,9 @@ const PORT = process.env.PORT || 3000;
 // Configures the database and opens a global connection that can be used in any module with `mongoose.connection`
 connectDB();
 
+// Must first load the models
+require('./server/models/User');
+
 // Instead of using body-parser middleware, use the new Express implementation of the same thing
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
