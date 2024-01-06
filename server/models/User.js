@@ -10,6 +10,12 @@ const userSchema = new mongoose.Schema({
     unique: true,
     required: true
   },
+  name: {
+    type: String,
+  },
+  dateOfBirth: {
+    type: Date,
+  },
   hash: {
     type: String,
     required: function() {

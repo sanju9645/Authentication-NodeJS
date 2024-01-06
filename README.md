@@ -95,9 +95,26 @@ Passport-JWT Implementation
 5. Run it by 
     node tools/generateKeypair
 
-6. Add both keys on .gitignore
+6. Add both keys on .gitignore,
     tools/keys/id_rsa_priv.pem
     tools/keys/id_rsa_pub.pem
+
+    Because we don't need to push the keys to git and they keys will be generatd on the server by running the above mentioned script
+    but we need to push the 'keys' folder
+    Add a file named ".gitkeep" to the empty folder. Git does not track empty directories, but by adding a .gitkeep file, Git will see the folder as non-empty and include it in the next commit or push
+
+
+7. create the passport configuration file on 'config' folder
+
+8. require the passport module on app.js
+
+9. require it on the app.js file
+    require('./server/config/passport')(passport);
+
+10. Call the middleware on the app.js
+    app.use(passport.initialize());
+
+
 
 
 -------------------------------------------------
@@ -110,9 +127,3 @@ create the .env file
 
 run 
 node tools/generateKeypair
-
-
-I have a file on path tools/keys/id_rsa_priv.pem
-I need to avoid pushing this file
-how to add this in gitignore
-but I need to push the folder tools/keys/

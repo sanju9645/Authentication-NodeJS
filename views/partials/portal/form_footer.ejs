@@ -1,0 +1,12 @@
+<div>
+  <p class="text-gray-500 text-sm mt-2">
+    <% if(locals.isLoginPage) { %>
+      <%- locals.constants.loginPagePhrases.CREATE_ACCOUNT_LABEL_1 %> 
+      <a href="/register" rel="" title="" class="text-green text-green-500 "> <%- locals.constants.loginPagePhrases.CREATE_ACCOUNT_LABEL_2 %> </a> 
+      <%- locals.constants.loginPagePhrases.CREATE_ACCOUNT_LABEL_3 %> 
+    <% } else { %>
+      <%- locals.constants.loginPagePhrases.BACK_TO_LOGIN_LABEL_1 %> 
+      <a href="/login" rel="" title="" class="text-green text-green-500 "> <%- locals.constants.loginPagePhrases.BACK_TO_LOGIN_LABEL_2 %> </a> 
+    <% } %>
+  </p>
+</div>

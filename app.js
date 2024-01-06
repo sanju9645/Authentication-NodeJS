@@ -5,6 +5,7 @@ const cookieParser = require('cookie-parser');
 const path = require('path');
 const { errorHandler } = require('./lib/errorHandler');
 const expressLayout = require('express-ejs-layouts');
+const passport = require('passport');
 
 
 /**
@@ -24,6 +25,13 @@ connectDB();
 
 // Must first load the models
 require('./server/models/User');
+
+// Pass the global passport object into the configuration function
+require('./server/config/passport')(passport);
+
+// This will initialize the passport object on every request
+app.use(passport.initialize());
+
 
 // Instead of using body-parser middleware, use the new Express implementation of the same thing
 app.use(express.json());
