@@ -12,10 +12,10 @@ document.addEventListener('DOMContentLoaded', () => {
   const confirmPasswordInput = document.getElementById('confirm_password_field');
   const nameInput     = document.getElementById('register_full_name');
   const dobInput      = document.getElementById('register_dob');
-
   const signInButton  = document.getElementById('portal_signin_button');
   const signUpButton  = document.getElementById('portal_signup_button');
-
+  const userPortalForm = document.getElementById("userPortalForm");
+  
   const inputCheckNotNull = (inputField) => {
     const inputValue = inputField.value.trim();
     let isValidInput = inputValue !== '';
@@ -32,6 +32,7 @@ document.addEventListener('DOMContentLoaded', () => {
       inputField.classList.remove('border-gray-300', 'focus:border-green-400');
     }
     updateSignInButton();
+    // updateSignUpButton();
   }
 
   const validateEmailInput = () => {
@@ -96,6 +97,18 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   };
 
+  const updateSignUpButton = () => {
+    let buttonEnable = validateEmailInput() && validatePasswordInput() && validateConfirmPasswordInput() && validateNameInput() && validateDobInput();
+
+    if (signUpButton) {
+      if (buttonEnable) {
+        signUpButton.classList.remove('pointer-events-none');
+      } else {
+        signUpButton.classList.add('pointer-events-none');
+      }
+    }
+  };
+
   emailInput.addEventListener('input', () => {
     handleInputField(emailInput, validateEmailInput());
   });
@@ -138,6 +151,7 @@ document.addEventListener('DOMContentLoaded', () => {
         displayToast('portal-toast-danger', invalidEmailAndPasswordNote);
       } else {
         closeToast('portal-toast-danger');
+        userPortalForm.submit();
       }
     });
   }
@@ -158,6 +172,7 @@ document.addEventListener('DOMContentLoaded', () => {
         displayToast('portal-toast-danger', invalidDobNote);
       } else {
         closeToast('portal-toast-danger');
+        userPortalForm.submit();
       }
     }); 
   }

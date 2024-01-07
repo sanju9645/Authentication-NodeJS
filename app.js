@@ -52,7 +52,7 @@ app.set('views', path.join(__dirname, 'views'));
  * -------------- ROUTES ----------------
  */
 // app.use(require('./server/routes'));
-app.use('/', require('./server/routes/main'));
+app.use('/', require('./server/routes/portal'));
 
 app.use(errorHandler);
 
