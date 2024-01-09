@@ -1,6 +1,6 @@
 
 <div class="bg-no-repeat bg-cover bg-center relative index-page">
-  <div class="absolute bg-gradient-to-b from-green-500 to-green-400 opacity-60 inset-0 z-0"></div>
+  <div class="absolute bg-gradient-to-b from-<%= locals.constants.colors.PORTAL_PAGE_MAIN_COLOR %>-500 to-<%= locals.constants.colors.PORTAL_PAGE_MAIN_COLOR %>-400 opacity-60 inset-0 z-0"></div>
   <div class="min-h-screen sm:flex sm:flex-row mx-0 justify-center">
     <%- include('./portal/main.ejs') %>
 
@@ -11,7 +11,7 @@
         <div class="pt-5 text-center text-gray-400 text-xs">
           <span>
             <%- locals.constants.generalInfo.COPY_RIGHT_TEXT %>
-            <a href="<%- locals.constants.generalInfo.DEV_GITHUB_PROFILE %>" rel="" target="_blank" title="" class="text-green hover:text-green-500 "> <%- locals.constants.generalInfo.DEV_USERNAME %> </a>
+            <a href="<%- locals.constants.generalInfo.DEV_GITHUB_PROFILE %>" rel="" target="_blank" title="" class="text-<%= locals.constants.colors.PORTAL_PAGE_MAIN_COLOR %> hover:text-<%= locals.constants.colors.PORTAL_PAGE_MAIN_COLOR %>-500 "> <%- locals.constants.generalInfo.DEV_USERNAME %> </a>
           </span>
         </div>
       </div>

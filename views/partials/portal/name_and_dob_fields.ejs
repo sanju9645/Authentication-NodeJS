@@ -3,7 +3,9 @@
     <!-- Full Name -->
     <div class="md:w-70 mb-4 md:mb-0">
       <div class="space-y-2 mt-4">
-        <label class="text-sm font-medium text-gray-700 tracking-wide"> <%- locals.constants.generalInfo.FULL_NAME_FIELD_LABEL %> </label>
+        <label class="text-sm font-medium text-<%= locals.constants.colors.PORTAL_FORM_LABEL_COLOR %>-700 tracking-wide"> 
+          <%- locals.constants.generalInfo.FULL_NAME_FIELD_LABEL %> 
+        </label>
         <input 
           name="register_full_name" 
           id="register_full_name" 
@@ -17,7 +19,9 @@
     <!-- Date of Birth -->
     <div class="md:w-30">
       <div class="space-y-2 mt-4">
-        <label class="mb-5 text-sm font-medium text-gray-700 tracking-wide"> <%- locals.constants.loginPagePhrases.DATE_OF_BIRTH_LABEL %> </label>
+        <label class="mb-5 text-sm font-medium text-<%= locals.constants.colors.PORTAL_FORM_LABEL_COLOR %>-700 tracking-wide"> 
+          <%- locals.constants.loginPagePhrases.DATE_OF_BIRTH_LABEL %> 
+        </label>
         <div class="relative max-w-sm">
           <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
             <svg class="w-4 h-4 m-1 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">

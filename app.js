@@ -16,7 +16,7 @@ const passport = require('passport');
 require('dotenv').config();
 
 // Create the Express application
-var app = express();
+const app = express();
 
 const PORT = process.env.PORT || 3000;
 
@@ -31,7 +31,6 @@ require('./server/config/passport')(passport);
 
 // This will initialize the passport object on every request
 app.use(passport.initialize());
-
 
 // Instead of using body-parser middleware, use the new Express implementation of the same thing
 app.use(express.json());
