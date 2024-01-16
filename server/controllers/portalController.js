@@ -1,3 +1,4 @@
+require('dotenv').config();
 const utils     = require('../../lib/utils');
 const constants = require('../../lib/constants');
 const passport  = require('../../lib/passport');
@@ -67,14 +68,19 @@ const validateRegisterUserForm = (req) => {
 }
 
 const createUserFromReqData = async (body) => {
-  if (! await user.userByEmail(body.login_email_field)) {
+  const email = body.login_email_field;
+
+  if (! await user.userByEmail(email)) {
     const saltHash = passport.genPassword(body.login_password_field);
+    const isAdmin = await user.userIsAdmin(email);
+
     const newUser  = new User({
-      email: body.login_email_field,
+      email,
       name: body.register_full_name,
       dateOfBirth: body.register_dob,
       hash: saltHash.hash,
-      salt: saltHash.salt
+      salt: saltHash.salt,
+      isAdmin
     });
 
     try {

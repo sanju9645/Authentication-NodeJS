@@ -33,6 +33,10 @@ const userSchema = new mongoose.Schema({
     unique: true,
     sparse: true, // Allows null values for unique fields (needed for username/password users)
   },
+  emailVerified: {
+    type: Boolean,
+    default: false
+  },
   isAdmin: {
     type: Boolean,
     default: false
