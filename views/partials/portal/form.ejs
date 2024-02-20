@@ -1,0 +1,51 @@
+<%- include('./form_heading.ejs') %>
+
+<div class="space-y-5">
+  <%- include('../components/toast_danger.ejs') %>
+  <%- include('../components/toast_success.ejs') %>
+  <form 
+    id="userPortalForm" 
+    name="userPortalForm" 
+    method="POST" 
+    action="<%- (locals.isLoginPage) ? '/login' : '/register' %>" 
+    >
+
+    <div class="space-y-2">
+      <label class="text-sm font-medium text-<%= locals.constants.colors.PORTAL_FORM_LABEL_COLOR %>-700 tracking-wide"> <%- locals.constants.loginPagePhrases.EMAIL_FIELD_LABEL %> </label>
+      <input 
+        name="login_email_field" 
+        id="login_email_field" 
+        class=" w-full text-sm px-4 py-2 border  border-gray-300 rounded-lg focus:outline-none focus:border-green-400 pl-6" 
+        type="" 
+        placeholder="<%- locals.constants.loginPagePhrases.EMAIL_FIELD_PLACEHOLDER %>"
+        >
+    </div>
+
+    <div class="space-y-2 mt-4">
+      <label class="mb-5 text-sm font-medium text-<%= locals.constants.colors.PORTAL_FORM_LABEL_COLOR %>-700 tracking-wide"> <%- locals.constants.loginPagePhrases.PASSWORD_FIELD_LABEL %> </label>
+      <input id="login_password_field" name="login_password_field" type="password" class="w-full content-center text-sm px-4 py-2 pl-6 border  border-gray-300 rounded-lg focus:outline-none focus:border-green-400" type="" placeholder="<%- locals.constants.loginPagePhrases.PASSWORD_FIELD_PLACEHOLDER %>">
+    </div>
+
+    <% if(!locals.isLoginPage) { %>
+      <div class="space-y-2 mt-4">
+        <label class="mb-5 text-sm font-medium text-<%= locals.constants.colors.PORTAL_FORM_LABEL_COLOR %>-700 tracking-wide"> <%- locals.constants.loginPagePhrases.PASSWORD_CONFIRMATION_FIELD_LABEL %> </label>
+        <input id="confirm_password_field" name="confirm_password_field" type="text" class="w-full content-center text-sm px-4 py-2 pl-6 border  border-gray-300 rounded-lg focus:outline-none focus:border-green-400" type="" placeholder="<%- locals.constants.loginPagePhrases.PASSWORD_CONFIRMATION_FIELD_PLACEHOLDER %>">
+      </div>
+    <% } %>
+
+    <%- include('./name_and_dob_fields.ejs') %>
+    
+    <%- include('./optional_actions.ejs') %>
+
+    <div>
+      <button 
+        id="<%- locals.isLoginPage ? 'portal_signin_button' : 'portal_signup_button' %>" 
+        type="button" 
+        class="w-full mt-4 flex justify-center bg-<%= locals.constants.colors.PORTAL_FORM_BUTTON_COLOR %>-500  hover:bg-<%= locals.constants.colors.PORTAL_FORM_BUTTON_COLOR %>-500 text-gray-100 p-3  rounded-lg tracking-wide font-semibold  shadow-lg cursor-pointer transition ease-in duration-500 <%- locals.isLoginPage ? 'pointer-events-none' : '' %>"
+        >
+        <%- (locals.isLoginPage ? locals.constants.loginPagePhrases.SIGN_IN_BUTTON_LABEL : locals.constants.loginPagePhrases.SIGN_UP_BUTTON_LABEL) %>
+      </button>
+    </div>
+  </form>
+  <%- include('./form_footer.ejs') %>
+</div>
