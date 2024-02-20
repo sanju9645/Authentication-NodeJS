@@ -6,7 +6,7 @@ Authentication - JWT and  Google oauth20 using Passport JS
    Run the command: npm init -y
 
 2. Install Magic Ingredients:
-   Execute: npm i body-parser connect-mongo dotenv express express-ejs-layouts express-session mongoose passport passport-jwt cors cookie-parser bcrypt google-auth-library ejs passport-google-oauth20 jsonwebtoken path inspirational-quotes crypto fs
+   Execute: npm i body-parser connect-mongo dotenv express express-ejs-layouts express-session mongoose passport passport-jwt cors cookie-parser bcrypt google-auth-library ejs passport-google-oauth20 jsonwebtoken path inspirational-quotes crypto fs nodemailer uuid
 
 3. Equip Your Developers:
    Install Nodemon as a sidekick: npm i nodemon --save-dev
@@ -127,3 +127,23 @@ create the .env file
 
 run 
 node tools/generateKeypair
+
+Add the email id and password on the .env file like below,
+
+# Auth email credentials
+AUTH_EMAIL=something@gmail.com
+AUTH_PASS=yourpassword
+
+Goto this link,
+https://myaccount.google.com/security
+
+Make sure that the 2 step verification is on 
+
+Then goto this link,
+https://myaccount.google.com/u/1/signinoptions/two-step-verification
+
+Create APP password
+
+Create a new APP with a name, copy the password
+
+

@@ -15,4 +15,6 @@ router.post('/register', portalController.register_post);
 
 router.post('/login', portalController.login_post);
 
+router.get('/user/verify/:userId/:uniqueString', portalController.verify_get);
+
 module.exports = router;

@@ -25,6 +25,7 @@ connectDB();
 
 // Must first load the models
 require('./server/models/User');
+require('./server/models/UserVerification');
 
 // Pass the global passport object into the configuration function
 require('./server/config/passport')(passport);
