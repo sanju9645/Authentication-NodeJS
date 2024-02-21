@@ -6,7 +6,8 @@ Authentication - JWT and  Google oauth20 using Passport JS
    Run the command: npm init -y
 
 2. Install Magic Ingredients:
-   Execute: npm i body-parser connect-mongo dotenv express express-ejs-layouts express-session mongoose passport passport-jwt cors cookie-parser bcrypt google-auth-library ejs passport-google-oauth20 jsonwebtoken path inspirational-quotes crypto fs nodemailer uuid
+   Execute: 
+   npm i body-parser connect-mongo dotenv express express-ejs-layouts express-session mongoose passport passport-jwt cors cookie-parser bcrypt google-auth-library ejs passport-google-oauth20 jsonwebtoken path inspirational-quotes crypto fs nodemailer uuid express-session
 
 3. Equip Your Developers:
    Install Nodemon as a sidekick: npm i nodemon --save-dev

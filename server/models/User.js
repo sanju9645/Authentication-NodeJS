@@ -15,6 +15,7 @@ const userSchema = new mongoose.Schema({
   },
   dateOfBirth: {
     type: Date,
+    required: false
   },
   hash: {
     type: String,

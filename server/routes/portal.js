@@ -4,6 +4,9 @@ const express = require('express');
 const router = express.Router();
 const portalController = require('../controllers/portalController');
 
+const passport = require('passport');
+require('../config/google-auth');
+
 // Routes
 router.get('/', portalController.login_get);
 
@@ -16,5 +19,25 @@ router.post('/register', portalController.register_post);
 router.post('/login', portalController.login_post);
 
 router.get('/user/verify/:userId/:uniqueString', portalController.verify_get);
+
+router.get('/auth/google',
+  passport.authenticate('google', { 
+    scope: ['email', 'profile'] 
+  })
+);
+
+router.get('/auth/google/callback', 
+  passport.authenticate('google', { 
+    successRedirect: '/auth/protected',
+    failureRedirect: '/login' 
+  })
+);
+
+router.get('/auth/protected', portalController.auth_google_get);
+
+router.get('/auth/logout', (req, res) => {
+  req.session.destroy();
+  res.redirect('/');
+});
 
 module.exports = router;

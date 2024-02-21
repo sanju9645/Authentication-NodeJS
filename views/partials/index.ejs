@@ -2,13 +2,13 @@
 <div class="bg-no-repeat bg-cover bg-center relative index-page">
   <div class="absolute bg-gradient-to-b from-<%= locals.constants.colors.PORTAL_PAGE_MAIN_COLOR %>-500 to-<%= locals.constants.colors.PORTAL_PAGE_MAIN_COLOR %>-400 opacity-60 inset-0 z-0"></div>
   <div class="min-h-screen sm:flex sm:flex-row mx-0 justify-center">
-    <h1 class="mb-3 mt-5 font-bold text-3xl login-page-site-name text-<%= locals.constants.colors.PORTAL_SITE_NAME_TEXT_COLOR %>"> 
+    <!-- <h1 class="mb-3 mt-5 font-bold text-3xl login-page-site-name text-<%= locals.constants.colors.PORTAL_SITE_NAME_TEXT_COLOR %>"> 
       <i class="fa-solid fa-code fa-lg"></i> { <%= locals.constants.generalInfo.PORTAL_SITE_NAME %> }
-    </h1>
+    </h1> -->
 
     <%- include('./portal/main.ejs') %>
 
-    <div class="flex justify-center self-center  z-10">
+    <div class="flex justify-center self-center  z-10 mr-5">
       <div class="p-12 bg-white mx-auto rounded-2xl w-100 ">
         <%- include('./portal/form.ejs') %>
 

@@ -112,10 +112,35 @@ const verify_get = async (req, res) => {
   res.render('login', { locals });
 }
 
+const auth_google_get = async (req, res) => {
+  const email = req.user.email;
+  
+  let newUser = await user.userByEmail(email);
+
+  if (! newUser) {
+    const isAdmin = await user.userIsAdmin(email);
+
+    newUser = userLib.createUser({
+      email,
+      name     : req.user.fullName,
+      googleId : req.user.googleId,
+      emailVerified : true,
+      isAdmin
+    });
+  }
+
+  if (newUser) {
+    res.send(`Hello ${newUser.name} ${newUser.email}`);
+  } else {
+    res.status(500).send("An error occurred");
+  }
+}
+
 module.exports = {
   login_get,
   register_get,
   register_post,
   login_post,
-  verify_get
+  verify_get,
+  auth_google_get
 }

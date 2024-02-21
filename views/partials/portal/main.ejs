@@ -1,11 +1,19 @@
-<div class="flex-col flex  self-center p-10 sm:max-w-5xl xl:max-w-2xl  z-10">
-  <div class="self-start hidden lg:flex flex-col  text-<%= locals.constants.colors.PORTAL_QUOTE_TEXT_COLOR %>">
-    <img src="" class="mb-3">
-    <h1 class="mb-3 font-bold text-3xl login-page-quote"> 
-      <%= "'''" + locals.quote.text + "'''" %> 
+<div class="p-10 sm:max-w-5xl xl:max-w-2xl z-10 flex flex-col justify-between h-screen">
+  <div class="flex flex-col">
+    <h1 class="font-bold text-3xl login-page-site-name text-<%= locals.constants.colors.PORTAL_SITE_NAME_TEXT_COLOR %>"> 
+      <i class="fa-solid fa-code fa-lg"></i> { <%= locals.constants.generalInfo.PORTAL_SITE_NAME %> }
     </h1>
-    <p class="pr-3 text-right italic login-page-author %>">
-      <%= locals.quote.author %>
-    </p>
+  </div>
+
+  <div class="flex flex-col self-center justify-center flex-grow">
+    <div class="hidden lg:flex flex-col text-<%= locals.constants.colors.PORTAL_QUOTE_TEXT_COLOR %> items-start">
+      <img src="" class="mb-3">
+      <h1 class="mb-3 font-bold text-3xl login-page-quote"> 
+        <%= "'''" + locals.quote.text + "'''" %> 
+      </h1>
+      <p class="ml-20 pl-20 pr-3 text-right italic login-page-author">
+        - <%= locals.quote.author %> -
+      </p>
+    </div>
   </div>
 </div>
