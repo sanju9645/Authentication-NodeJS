@@ -15,6 +15,7 @@ const userSchema = new mongoose.Schema({
   },
   dateOfBirth: {
     type: Date,
+    required: false
   },
   hash: {
     type: String,
@@ -32,6 +33,11 @@ const userSchema = new mongoose.Schema({
     type: String,
     unique: true,
     sparse: true, // Allows null values for unique fields (needed for username/password users)
+  },
+  profilePicture: {
+    type: String,
+    unique: true,
+    sparse: true,
   },
   emailVerified: {
     type: Boolean,

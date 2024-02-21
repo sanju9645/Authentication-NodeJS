@@ -6,6 +6,9 @@ const path = require('path');
 const { errorHandler } = require('./lib/errorHandler');
 const expressLayout = require('express-ejs-layouts');
 const passport = require('passport');
+const session = require('express-session');
+
+require('./server/config/google-auth');
 
 
 /**
@@ -30,8 +33,20 @@ require('./server/models/UserVerification');
 // Pass the global passport object into the configuration function
 require('./server/config/passport')(passport);
 
+app.use(session({
+  secret: process.env.EXPRESS_SESSION_SECRET,
+  resave: false,
+  saveUninitialized: true,
+  cookie: { 
+    maxAge: 3600000,
+    secure: false 
+  }
+}));
+
 // This will initialize the passport object on every request
 app.use(passport.initialize());
+
+app.use(passport.session());
 
 // Instead of using body-parser middleware, use the new Express implementation of the same thing
 app.use(express.json());
