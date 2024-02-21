@@ -130,6 +130,8 @@ const auth_google_get = async (req, res) => {
   }
 
   if (newUser) {
+    await User.updateOne({ _id: newUser._id }, { profilePicture: req.user.profilePhoto });
+
     res.send(`Hello ${newUser.name} ${newUser.email}`);
   } else {
     res.status(500).send("An error occurred");
