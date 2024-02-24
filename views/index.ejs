@@ -1,0 +1,22 @@
+
+<div class="bg-no-repeat bg-cover bg-center relative index-page">
+  <div class="absolute bg-gradient-to-b from-<%= locals.constants.colors.PORTAL_PAGE_MAIN_COLOR %>-500 to-<%= locals.constants.colors.PORTAL_PAGE_MAIN_COLOR %>-400 opacity-60 inset-0 z-0"></div>
+  <div class="min-h-screen sm:flex sm:flex-row mx-0 justify-center">
+    <%- include('./partials/portal/main.ejs') %>
+
+    <div class="flex justify-center self-center  z-10 mr-5">
+      <div class="p-12 bg-white mx-auto rounded-2xl w-100 ">
+        <% if (locals?.isLoginPage) { %>
+          <%- include('./partials/portal/form/login-form.ejs') %>
+        <% } else if (locals?.isRegisterPage) { %>
+          <%- include('./partials/portal/form/register-form.ejs') %>
+        <% } else if (locals?.resetPasswordRequest) { %>
+          <%- include('./partials/portal/form/reset-password-form.ejs') %>
+        <% } else if (locals?.passwordResetSubmitPage) { %>
+          <%- include('./partials/portal/form/reset-password-submit-form.ejs') %>
+        <% } %>
+        <%- include('./partials/portal/portal_page_footer.ejs') %>
+      </div>
+    </div>
+  </div>
+</div>

@@ -17,10 +17,13 @@ document.addEventListener('DOMContentLoaded', () => {
   const userPortalForm = document.getElementById("userPortalForm");
   
   const inputCheckNotNull = (inputField) => {
-    const inputValue = inputField.value.trim();
-    let isValidInput = inputValue !== '';
+    if (inputField) {
+      const inputValue = inputField.value.trim();
+      const isValidInput = inputValue !== '';
 
-    return isValidInput;
+      return isValidInput;
+    }
+    return true;
   }
 
   const handleInputField = (inputField, isValid = false) => {
@@ -32,7 +35,7 @@ document.addEventListener('DOMContentLoaded', () => {
       inputField.classList.remove('border-gray-300', 'focus:border-green-400');
     }
     updateSignInButton();
-    // updateSignUpButton();
+    updateSignUpButton();
   }
 
   const validateEmailInput = () => {
@@ -43,6 +46,11 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   const validatePasswordInput = () => {
+    const formAction = userPortalForm.getAttribute('class');
+
+    if ((formAction == 'password-reset-req-form') && passwordInput === null) {
+      return true;
+    }
     return inputCheckNotNull(passwordInput);
   }
 
@@ -51,14 +59,17 @@ document.addEventListener('DOMContentLoaded', () => {
     handleInputField(confirmPasswordInput, validateConfirmPasswordInput());
   }
 
-  const validateConfirmPasswordInput = () => {
-    const password = passwordInput.value.trim();
-    const confirmPassword = confirmPasswordInput.value.trim();
+  const validateConfirmPasswordInput = () => { 
+    if (passwordInput && confirmPasswordInput) {
+      const password = passwordInput.value.trim();
+      const confirmPassword = confirmPasswordInput.value.trim();
 
-    if (inputCheckNotNull(passwordInput) && inputCheckNotNull(confirmPasswordInput) && (password === confirmPassword)) {
-      return true;
+      if (inputCheckNotNull(passwordInput) && inputCheckNotNull(confirmPasswordInput) && (password === confirmPassword)) {
+        return true;
+      }
+      return false;
     }
-    return false;
+    return true;
   }
 
   const validateNameInput = () => {
@@ -66,11 +77,14 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   const validateDobInput = () => {
+    return true;
+
     const dob = dobInput.value.trim();
     const selectedDate = new Date(dob);
     const currentDate  = new Date();
 
-    if (!inputCheckNotNull(dobInput)) {
+
+    if (inputCheckNotNull(dobInput)) {
       return false;
     }
 
@@ -79,7 +93,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     if (selectedDate > currentDate) {
-      return false; // Date of birth should not be in the future
+      return false;
     }
 
     return true;
@@ -109,17 +123,21 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   };
 
-  emailInput.addEventListener('input', () => {
-    handleInputField(emailInput, validateEmailInput());
-  });
+  if (emailInput) {
+    emailInput.addEventListener('input', () => {
+      handleInputField(emailInput, validateEmailInput());
+    });
+  }
 
-  passwordInput.addEventListener('input', () => {
-    handleInputField(passwordInput, validatePasswordInput());
+  if (passwordInput) {
+    passwordInput.addEventListener('input', () => {
+      handleInputField(passwordInput, validatePasswordInput());
 
-    if (confirmPasswordInput) {
-      handleConfirmPasswordValidation();
-    }
-  });
+      if (confirmPasswordInput) {
+        handleConfirmPasswordValidation();
+      }
+    });
+  }
 
   if (confirmPasswordInput) {
     confirmPasswordInput.addEventListener('input', () => {
@@ -134,7 +152,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   if (dobInput) {
-    dobInput.addEventListener('input', () => {
+    dobInput.addEventListener('change', () => {
       handleInputField(dobInput, validateDobInput());
     });
   }

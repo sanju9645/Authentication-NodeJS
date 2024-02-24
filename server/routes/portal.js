@@ -20,6 +20,16 @@ router.post('/login', portalController.login_post);
 
 router.get('/user/verify/:userId/:uniqueString', portalController.verify_get);
 
+router.get('/user/password-reset', portalController.password_reset_get);
+
+router.post('/user/password-reset', portalController.password_reset_post);
+
+router.get('/user/password-reset/:id/:token', portalController.password_reset_verify_get);
+
+router.post('/user/password-reset/:id/:token', portalController.password_reset_verify_post);
+
+
+
 router.get('/auth/google',
   passport.authenticate('google', { 
     scope: ['email', 'profile'] 
