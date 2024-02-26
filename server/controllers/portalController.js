@@ -63,10 +63,7 @@ const verify_get = (req, res) => {
     const userVerification = await UserVerification.find({ userId });
 
     if (userVerification.length > 0) {
-      console.log('verify_getuserVerification  ' + userVerification);
-      console.log('verify_get uniqueString ' + uniqueString);
       const { expiresAt, identifier: hashedUniqueString } = userVerification[0];
-      console.log('verify_get hashedUniqueString ' + hashedUniqueString);
 
       if (expiresAt < Date.now()) {
         await UserVerification.deleteOne({ userId });
