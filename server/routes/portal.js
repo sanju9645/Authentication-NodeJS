@@ -2,10 +2,8 @@ require('dotenv').config();
 
 const express = require('express');
 const router = express.Router();
-const portalController = require('../controllers/portalController');
 
 const passport = require('passport');
-require('../config/google-auth');
 
 // Routes
 router.get('/', portalController.login_get);
