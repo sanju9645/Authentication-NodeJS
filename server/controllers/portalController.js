@@ -89,7 +89,7 @@ const verify_get = (req, res) => {
   });
 }
 
-const auth_google_get = (req, res) => {
+const auth_google_protected_get = (req, res) => {
   utils.secureExecute(req, res, async (req, res) => {
     const newUser = await userLib.createUser({
       email    : req.user.email,
@@ -173,7 +173,7 @@ const password_reset_verify_post = async (req, res) => {
         [status, toastBody] = userLib.validateResetPasswordForm(req);
 
         if (status) {
-          const saltHash = passport.genPassword(req?.body?.login_password_field);
+          const saltHash = passportLib.genPassword(req?.body?.login_password_field);
           await User.updateOne({ _id: resetUser._id }, { hash: saltHash.hash, salt: saltHash.salt });
           toastBody = constants.loginPagePhrases.RESET_PASSWORD_SUCCESS_NOTE;
         }
@@ -193,7 +193,7 @@ module.exports = {
   register_post,
   login_post,
   verify_get,
-  auth_google_get,
+  auth_google_protected_get,
   password_reset_get,
   password_reset_post,
   password_reset_verify_get,
