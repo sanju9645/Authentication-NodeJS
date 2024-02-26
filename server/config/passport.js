@@ -43,7 +43,7 @@ the token should be like this.
 And the login route will be,
 
 router.post('/login', function(req, res, next){
-  User.findOne({ username: req.body.username })
+  UserModel.findOne({ username: req.body.username })
         .then((user) => {
           if (!user) {
               return res.status(401).json({ success: false, msg: "could not find user" });
@@ -92,7 +92,7 @@ function issueJWT(user) {
 
 And the loin route will be,
 router.post('/login', function(req, res, next){
-  User.findOne({ username: req.body.username })
+  UserModel.findOne({ username: req.body.username })
         .then((user) => {
           if (!user) {
               return res.status(401).json({ success: false, msg: "could not find user" });
@@ -121,7 +121,7 @@ module.exports = (passport) => {
       console.log(jwt_payload);
       
       // We will assign the `sub` property on the JWT to the database ID of user
-      User.findOne({_id: jwt_payload.sub})
+      UserModel.findOne({_id: jwt_payload.sub})
         .then((user) => {  
           // This flow look familiar?  It is the same as when we implemented
           // the `passport-local` strategy
