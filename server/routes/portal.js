@@ -2,10 +2,8 @@ require('dotenv').config();
 
 const express = require('express');
 const router = express.Router();
-const portalController = require('../controllers/portalController');
 
 const passport = require('passport');
-require('../config/google-auth');
 
 // Routes
 router.get('/', portalController.login_get);
@@ -19,6 +17,16 @@ router.post('/register', portalController.register_post);
 router.post('/login', portalController.login_post);
 
 router.get('/user/verify/:userId/:uniqueString', portalController.verify_get);
+
+router.get('/user/password-reset', portalController.password_reset_get);
+
+router.post('/user/password-reset', portalController.password_reset_post);
+
+router.get('/user/password-reset/:id/:token', portalController.password_reset_verify_get);
+
+router.post('/user/password-reset/:id/:token', portalController.password_reset_verify_post);
+
+
 
 router.get('/auth/google',
   passport.authenticate('google', { 

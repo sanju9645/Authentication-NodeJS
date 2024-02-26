@@ -1,14 +1,15 @@
 const express = require('express');
 const cors = require('cors');
-const connectDB =  require('./server/config/database');
+// const connectDB =  require('./server/config/database');
 const cookieParser = require('cookie-parser');
 const path = require('path');
-const { errorHandler } = require('./lib/errorHandler');
+// const { errorHandler } = require('./lib/errorHandler');
 const expressLayout = require('express-ejs-layouts');
 const passport = require('passport');
 const session = require('express-session');
 
-require('./server/config/google-auth');
+// require('./server/config/google-auth');
+require('./lib/siteconfig');
 
 
 /**
@@ -24,7 +25,7 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 // Configures the database and opens a global connection that can be used in any module with `mongoose.connection`
-connectDB();
+database.connectDB();
 
 // Must first load the models
 require('./server/models/User');
@@ -69,7 +70,7 @@ app.set('views', path.join(__dirname, 'views'));
 // app.use(require('./server/routes'));
 app.use('/', require('./server/routes/portal'));
 
-app.use(errorHandler);
+app.use(errorHandler.errorHandler);
 
 
 /**

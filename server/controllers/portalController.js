@@ -1,36 +1,21 @@
-const utils     = require('../../lib/utils');
-const constants = require('../../lib/constants');
-const user      = require('../../lib/ops/users');
-const userLib   = require('../../lib/user');
-const raven     = require('../../lib/eRavenConfig');
-const UserVerification = require('../models/UserVerification');
-const path = require('path');
-const bcrypt = require('bcrypt');
-const User = require('../models/User');
-const { error } = require('console');
+require('dotenv').config();
 
+const bcrypt = require('bcrypt');
+const jwt    = require('jsonwebtoken');
 
 const login_get = async (req, res) => {
   utils.secureExecute(req, res, (req, res) => {
-    const additionalData = {
-      isLoginPage: true,
-      portalToastId: 'portal',
-    };
-    const locals = utils.getLocals(additionalData);
-
-    res.render('login', { locals });
+    const locals = utils.fmtAdditionalData({isLoginPage : true});
+    
+    res.render('index', { locals });
   });
 };
 
 const register_get = async (req, res) => {
   utils.secureExecute(req, res, (req, res) => {
-    const additionalData = {
-      isLoginPage: false,
-      portalToastId: 'portal',
-    };
-    const locals = utils.getLocals(additionalData);
-    
-    res.render('login', { locals });
+    const locals = utils.fmtAdditionalData({isRegisterPage : true, title : 'Register'});
+
+    res.render('index', { locals });
   });
 };
 
@@ -51,8 +36,8 @@ const register_post = async (req, res) => {
       }
     }
 
-    const locals = utils.getLocals(utils.fmtAdditionalData(status, toastBody));
-    res.render('login', { locals });
+    const locals = utils.fmtAdditionalData({isLoginPage : true}, {status, toastBody});
+    res.render('index', { locals });
   });
 };
 
@@ -63,27 +48,25 @@ const login_post = async (req, res) => {
     if (loginResult.status) {
       res.send(`<h1>${loginResult.message}</h1>`);
     } else {
-      const additionalData = {
-        isLoginPage: true,
-        portalToastId: 'portal',
-        dangerToastBody : loginResult.message,
-        dangerToastAction : ' '
-      };
-      const locals = utils.getLocals(additionalData);
-      res.render('login', { locals });
+      const status    = false;
+      const toastBody = loginResult.message;
+      const locals    = utils.fmtAdditionalData({isLoginPage : true}, {status, toastBody});
+      res.render('index', { locals });
     }
   });
 };
 
-const verify_get = async (req, res) => {
-  let result = { status: false, message: constants.loginPagePhrases.EMAIL_VERIFICATION_ERROR_NOTE };
-
-  try {
+const verify_get = (req, res) => {
+  utils.secureExecute(req, res, async (req, res) => {
+    let result = { status: false, message: constants.loginPagePhrases.EMAIL_VERIFICATION_ERROR_NOTE };
     const {userId, uniqueString} = req.params;
     const userVerification = await UserVerification.find({ userId });
 
     if (userVerification.length > 0) {
+      console.log('verify_getuserVerification  ' + userVerification);
+      console.log('verify_get uniqueString ' + uniqueString);
       const { expiresAt, identifier: hashedUniqueString } = userVerification[0];
+      console.log('verify_get hashedUniqueString ' + hashedUniqueString);
 
       if (expiresAt < Date.now()) {
         await UserVerification.deleteOne({ userId });
@@ -103,39 +86,116 @@ const verify_get = async (req, res) => {
     } else {
       result = { status: false, message: constants.loginPagePhrases.ACCOUNT_RECORD_EXISTENCE_ERROR_NOTE };
     }
-  } catch (error) {
-    console.error(error);
-    result = { status: false, message: constants.loginPagePhrases.USER_RECORD_CHECKING_ERROR_NOTE };
-  }
 
-  const locals = utils.getLocals(utils.fmtAdditionalData(result.status, result.message));
-  res.render('login', { locals });
+    const locals = utils.fmtAdditionalData({isLoginPage : true}, {status : result.status, toastBody : result.message});
+    res.render('index', { locals });
+  });
 }
 
-const auth_google_get = async (req, res) => {
-  const email = req.user.email;
-  
-  let newUser = await user.userByEmail(email);
+const auth_google_get = (req, res) => {
+  utils.secureExecute(req, res, async (req, res) => {
+    const email = req.user.email;
+    let newUser = await user.userByEmail(email);
 
-  if (! newUser) {
-    const isAdmin = await user.userIsAdmin(email);
+    if (! newUser) {
+      const isAdmin = await user.userIsAdmin(email);
 
-    newUser = userLib.createUser({
-      email,
-      name     : req.user.fullName,
-      googleId : req.user.googleId,
-      emailVerified : true,
-      isAdmin
-    });
-  }
+      newUser = await userLib.createUser({
+        email,
+        name     : req.user.fullName,
+        googleId : req.user.googleId,
+        emailVerified : true,
+        isAdmin
+      });
+    }
 
-  if (newUser) {
-    await User.updateOne({ _id: newUser._id }, { profilePicture: req.user.profilePhoto });
+    if (newUser) {
+      await User.updateOne({ _id: newUser._id }, { profilePicture: req.user.profilePhoto });
+      res.send(`Hello ${newUser.name} ${newUser.email}`);
+    } else {
+      res.status(500).render('error', { locals });
+    }
+  });
+}
 
-    res.send(`Hello ${newUser.name} ${newUser.email}`);
-  } else {
-    res.status(500).send("An error occurred");
-  }
+const password_reset_get = (req, res) => {
+  utils.secureExecute(req, res, (req, res) => {
+    const locals = utils.fmtAdditionalData({resetPasswordRequest : true, title: 'Reset Password'});
+
+    res.render('index', { locals });
+  });
+}
+
+const password_reset_post = (req, res) => {
+  utils.secureExecute(req, res, async (req, res) => {
+    const [isValid, toastBody, resetUser] = await userLib.validateForgotPasswordForm(req);
+
+    if (isValid) {
+      const secret = process.env.JWT_SECRET + resetUser.salt;
+      const payload = {
+        email : resetUser.email,
+        id    : resetUser._id
+      };
+      const token = jwt.sign(payload, secret, {expiresIn: '15m'});
+
+      await userLib.sendComposeForgotPasswordEmail(resetUser._id, token, resetUser.email);
+    }
+    const locals = utils.fmtAdditionalData({isLoginPage : true}, {status: isValid, toastBody});
+    res.render('index', { locals });
+  });
+}
+
+const password_reset_verify_get = async (req, res) => {
+  utils.secureExecute(req, res, async (req, res) => {
+    const {id, token} = req.params;
+    const resetUser = await user.userById(id);
+
+    if (resetUser) {
+      const secret = process.env.JWT_SECRET + resetUser.salt;
+      try {
+        const payload = jwt.verify(token, secret);
+        const locals = utils.fmtAdditionalData({passwordResetSubmitPage : true, title : 'Reset Password', resetUserEmail : resetUser.email, id, token});
+        res.render('index', { locals });
+      } catch(error) {
+        const locals = utils.fmtAdditionalData({isLoginPage : true}, {status: false, toastBody: constants.loginPagePhrases.RESET_PASSWORD_LINK_EXPIRED_NOTE});
+        res.render('index', { locals });
+      }
+    } else {
+      const locals = utils.fmtAdditionalData({isLoginPage : true}, {status: false, toastBody: constants.loginPagePhrases.RESET_PASSWORD_LINK_INVALID_NOTE});
+      res.render('index', { locals });
+    }
+  });
+}
+
+const password_reset_verify_post = async (req, res) => {
+  utils.secureExecute(req, res, async (req, res) => {
+    const {id, token} = req.params;
+    let status;
+    let toastBody;
+    const resetUser = await user.userById(id);
+
+    if (!resetUser) {
+      toastBody = constants.loginPagePhrases.RESET_PASSWORD_LINK_INVALID_NOTE;
+      status    = false;
+    } else {
+      try {
+        const secret = process.env.JWT_SECRET + resetUser.salt;
+        jwt.verify(token, secret); // If jwt.verify fails, it will throw an error caught by the catch block
+        [status, toastBody] = userLib.validateResetPasswordForm(req);
+
+        if (status) {
+          const saltHash = passport.genPassword(req?.body?.login_password_field);
+          await User.updateOne({ _id: resetUser._id }, { hash: saltHash.hash, salt: saltHash.salt });
+          toastBody = constants.loginPagePhrases.RESET_PASSWORD_SUCCESS_NOTE;
+        }
+      } catch(error) {
+        status    = false;
+        toastBody = constants.loginPagePhrases.RESET_PASSWORD_LINK_EXPIRED_NOTE;
+      }
+    }
+    const locals = utils.fmtAdditionalData({isLoginPage: true}, {status, toastBody});
+    res.render('index', { locals });
+  });
 }
 
 module.exports = {
@@ -144,5 +204,9 @@ module.exports = {
   register_post,
   login_post,
   verify_get,
-  auth_google_get
+  auth_google_get,
+  password_reset_get,
+  password_reset_post,
+  password_reset_verify_get,
+  password_reset_verify_post
 }

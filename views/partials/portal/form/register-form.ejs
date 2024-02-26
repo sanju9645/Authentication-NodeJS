@@ -1,0 +1,46 @@
+<%
+  const submitButtonParams = {
+    buttonId       : 'portal_signup_button',
+    buttonClass    : `w-full mt-4 flex justify-center bg-${locals.constants.colors.PORTAL_FORM_BUTTON_COLOR}-500 hover:bg-${locals.constants.colors.PORTAL_FORM_BUTTON_COLOR}-500 text-gray-100 p-3 rounded-lg tracking-wide font-semibold shadow-lg cursor-pointer transition ease-in duration-500 pointer-events-none`,
+    showGoogleAuth : true,
+    buttonLabel    : locals.constants.loginPagePhrases.SIGN_UP_BUTTON_LABEL,
+    googleAuthLink : locals.constants.loginPagePhrases.SIGN_UP_WITH_GOOGLE_BUTTON_LABEL,
+    boxHeading     : locals.constants.loginPagePhrases.REGISTER_BOX_HEADING,
+    boxSubHeading  : locals.constants.loginPagePhrases.REGISTER_BOX_SUB_HEADING,
+    messagePart1   : locals.constants.loginPagePhrases.BACK_TO_LOGIN_LABEL_1,
+    messagePart2   : locals.constants.loginPagePhrases.BACK_TO_LOGIN_LABEL_2,
+    messagePart3   : '',
+    linkHref       : "/login"
+  };
+%>
+
+<%- include('../form_heading.ejs', submitButtonParams) %>
+
+<div class="space-y-5">
+  <%- include('../../components/toast_danger.ejs') %>
+  <%- include('../../components/toast_success.ejs') %>
+  
+  <form id="userPortalForm" name="userPortalForm" method="POST" action="/register" >
+    <%- include('./text-fields/email.ejs') %>
+    <%- include('./text-fields/password.ejs') %>
+    <%- include('./text-fields/confirm-password.ejs') %>
+
+    <div class="md:flex md:space-x-4">
+      <%- include('./text-fields/name.ejs') %>
+      <%- include('./text-fields/dob.ejs') %>
+    </div>
+
+    <div class="flex items-center justify-between">
+      <div class="flex items-center mt-4">
+        <%- include('./other-fields/remember-me.ejs') %>
+      </div>
+    
+      <div class="text-sm mt-2">
+        <%- include('./other-fields/forgot-password.ejs') %>
+      </div>
+    </div>
+    <%- include('./other-fields/submit-button.ejs', submitButtonParams) %>
+  </form>
+
+  <%- include('../form_footer.ejs', submitButtonParams) %>
+</div>
