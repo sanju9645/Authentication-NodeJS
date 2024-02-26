@@ -91,20 +91,12 @@ const verify_get = (req, res) => {
 
 const auth_google_get = (req, res) => {
   utils.secureExecute(req, res, async (req, res) => {
-    const email = req.user.email;
-    let newUser = await user.userByEmail(email);
-
-    if (! newUser) {
-      const isAdmin = await user.userIsAdmin(email);
-
-      newUser = await userLib.createUser({
-        email,
-        name     : req.user.fullName,
-        googleId : req.user.googleId,
-        emailVerified : true,
-        isAdmin
-      });
-    }
+    const newUser = await userLib.createUser({
+      email    : req.user.email,
+      name     : req.user.fullName,
+      googleId : req.user.googleId,
+      emailVerified : true,
+    });
 
     if (newUser) {
       await User.updateOne({ _id: newUser._id }, { profilePicture: req.user.profilePhoto });
