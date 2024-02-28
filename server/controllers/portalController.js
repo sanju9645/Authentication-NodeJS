@@ -4,45 +4,45 @@ const bcrypt = require('bcrypt');
 const jwt    = require('jsonwebtoken');
 
 const login_get = async (req, res) => {
-  utils.secureExecute(req, res, (req, res) => {
-    const locals = utils.fmtAdditionalData({isLoginPage : true});
+  UtilsLib.secureExecute(req, res, (req, res) => {
+    const locals = UtilsLib.fmtAdditionalData({isLoginPage : true});
     
     res.render('index', { locals });
   });
 };
 
 const register_get = async (req, res) => {
-  utils.secureExecute(req, res, (req, res) => {
-    const locals = utils.fmtAdditionalData({isRegisterPage : true, title : 'Register'});
+  UtilsLib.secureExecute(req, res, (req, res) => {
+    const locals = UtilsLib.fmtAdditionalData({isRegisterPage : true, title : 'Register'});
 
     res.render('index', { locals });
   });
 };
 
 const register_post = async (req, res) => {
-  utils.secureExecute(req, res, async (req, res) => {
+  UtilsLib.secureExecute(req, res, async (req, res) => {
     let [isValid, toastBody] = userLib.validateRegisterUserForm(req);
     let status = false;
 
     if (isValid) {
-      if (await user.userByEmail(req.body.login_email_field)) {
-        toastBody = constants.loginPagePhrases.USER_EXIST_WITH_SAME_MAIL;
+      if (await userOps.userByEmail(req.body.login_email_field)) {
+        toastBody = constantsLib.loginPagePhrases.USER_EXIST_WITH_SAME_MAIL;
       } else {
         status = userLib.createUserFromReqData(req.body);
 
         if (!status) {
-          toastBody = constants.loginPagePhrases.USER_CREATION_ERROR_MESSAGE;
+          toastBody = constantsLib.loginPagePhrases.USER_CREATION_ERROR_MESSAGE;
         }
       }
     }
 
-    const locals = utils.fmtAdditionalData({isLoginPage : true}, {status, toastBody});
+    const locals = UtilsLib.fmtAdditionalData({isLoginPage : true}, {status, toastBody});
     res.render('index', { locals });
   });
 };
 
 const login_post = async (req, res) => {
-  utils.secureExecute(req, res, async (req, res) => {
+  UtilsLib.secureExecute(req, res, async (req, res) => {
     const loginResult = await userLib.handleUserLogin(req, res);
 
     if (loginResult.status) {
@@ -50,64 +50,56 @@ const login_post = async (req, res) => {
     } else {
       const status    = false;
       const toastBody = loginResult.message;
-      const locals    = utils.fmtAdditionalData({isLoginPage : true}, {status, toastBody});
+      const locals    = UtilsLib.fmtAdditionalData({isLoginPage : true}, {status, toastBody});
       res.render('index', { locals });
     }
   });
 };
 
 const verify_get = (req, res) => {
-  utils.secureExecute(req, res, async (req, res) => {
-    let result = { status: false, message: constants.loginPagePhrases.EMAIL_VERIFICATION_ERROR_NOTE };
+  UtilsLib.secureExecute(req, res, async (req, res) => {
+    let result = { status: false, message: constantsLib.loginPagePhrases.EMAIL_VERIFICATION_ERROR_NOTE };
     const {userId, uniqueString} = req.params;
-    const userVerification = await UserVerification.find({ userId });
+    const verifiedUser = await UserVerificationModel.find({ userId });
 
-    if (userVerification.length > 0) {
-      const { expiresAt, identifier: hashedUniqueString } = userVerification[0];
+    if (verifiedUser.length > 0) {
+      const { expiresAt, identifier: hashedUniqueString } = verifiedUser[0];
 
       if (expiresAt < Date.now()) {
-        await UserVerification.deleteOne({ userId });
-        await User.deleteOne({ _id: userId });
-        result = { status: false, message: constants.loginPagePhrases.CONFIRMATION_LINK_EXPIRED_TEXT };
+        await UserVerificationModel.deleteOne({ userId });
+        await UserModel.deleteOne({ _id: userId });
+        result = { status: false, message: constantsLib.loginPagePhrases.CONFIRMATION_LINK_EXPIRED_TEXT };
       } else {
         const isMatch = await bcrypt.compare(uniqueString, hashedUniqueString);
 
         if (isMatch) {
-          await User.updateOne({ _id: userId }, { emailVerified: true });
-          await UserVerification.deleteOne({ userId });
-          result = { status: true, message: constants.loginPagePhrases.EMAIL_VERIFIED_NOTE };
+          await UserModel.updateOne({ _id: userId }, { emailVerified: true });
+          await UserVerificationModel.deleteOne({ userId });
+          result = { status: true, message: constantsLib.loginPagePhrases.EMAIL_VERIFIED_NOTE };
         } else {
-          result = { status: false, message: constants.loginPagePhrases.INCORRECT_USER_VERIFICATION_DETAILS_NOTE };
+          result = { status: false, message: constantsLib.loginPagePhrases.INCORRECT_USER_VERIFICATION_DETAILS_NOTE };
         }
       }
     } else {
-      result = { status: false, message: constants.loginPagePhrases.ACCOUNT_RECORD_EXISTENCE_ERROR_NOTE };
+      result = { status: false, message: constantsLib.loginPagePhrases.ACCOUNT_RECORD_EXISTENCE_ERROR_NOTE };
     }
 
-    const locals = utils.fmtAdditionalData({isLoginPage : true}, {status : result.status, toastBody : result.message});
+    const locals = UtilsLib.fmtAdditionalData({isLoginPage : true}, {status : result.status, toastBody : result.message});
     res.render('index', { locals });
   });
 }
 
-const auth_google_get = (req, res) => {
-  utils.secureExecute(req, res, async (req, res) => {
-    const email = req.user.email;
-    let newUser = await user.userByEmail(email);
-
-    if (! newUser) {
-      const isAdmin = await user.userIsAdmin(email);
-
-      newUser = await userLib.createUser({
-        email,
-        name     : req.user.fullName,
-        googleId : req.user.googleId,
-        emailVerified : true,
-        isAdmin
-      });
-    }
+const auth_google_protected_get = (req, res) => {
+  UtilsLib.secureExecute(req, res, async (req, res) => {
+    const newUser = await userLib.createUser({
+      email    : req.user.email,
+      name     : req.user.fullName,
+      googleId : req.user.googleId,
+      emailVerified : true,
+    });
 
     if (newUser) {
-      await User.updateOne({ _id: newUser._id }, { profilePicture: req.user.profilePhoto });
+      await UserModel.updateOne({ _id: newUser._id }, { profilePicture: req.user.profilePhoto });
       res.send(`Hello ${newUser.name} ${newUser.email}`);
     } else {
       res.status(500).render('error', { locals });
@@ -116,15 +108,15 @@ const auth_google_get = (req, res) => {
 }
 
 const password_reset_get = (req, res) => {
-  utils.secureExecute(req, res, (req, res) => {
-    const locals = utils.fmtAdditionalData({resetPasswordRequest : true, title: 'Reset Password'});
+  UtilsLib.secureExecute(req, res, (req, res) => {
+    const locals = UtilsLib.fmtAdditionalData({resetPasswordRequest : true, title: 'Reset Password'});
 
     res.render('index', { locals });
   });
 }
 
 const password_reset_post = (req, res) => {
-  utils.secureExecute(req, res, async (req, res) => {
+  UtilsLib.secureExecute(req, res, async (req, res) => {
     const [isValid, toastBody, resetUser] = await userLib.validateForgotPasswordForm(req);
 
     if (isValid) {
@@ -137,42 +129,42 @@ const password_reset_post = (req, res) => {
 
       await userLib.sendComposeForgotPasswordEmail(resetUser._id, token, resetUser.email);
     }
-    const locals = utils.fmtAdditionalData({isLoginPage : true}, {status: isValid, toastBody});
+    const locals = UtilsLib.fmtAdditionalData({isLoginPage : true}, {status: isValid, toastBody});
     res.render('index', { locals });
   });
 }
 
 const password_reset_verify_get = async (req, res) => {
-  utils.secureExecute(req, res, async (req, res) => {
+  UtilsLib.secureExecute(req, res, async (req, res) => {
     const {id, token} = req.params;
-    const resetUser = await user.userById(id);
+    const resetUser = await userOps.userById(id);
 
     if (resetUser) {
       const secret = process.env.JWT_SECRET + resetUser.salt;
       try {
         const payload = jwt.verify(token, secret);
-        const locals = utils.fmtAdditionalData({passwordResetSubmitPage : true, title : 'Reset Password', resetUserEmail : resetUser.email, id, token});
+        const locals = UtilsLib.fmtAdditionalData({passwordResetSubmitPage : true, title : 'Reset Password', resetUserEmail : resetUser.email, id, token});
         res.render('index', { locals });
       } catch(error) {
-        const locals = utils.fmtAdditionalData({isLoginPage : true}, {status: false, toastBody: constants.loginPagePhrases.RESET_PASSWORD_LINK_EXPIRED_NOTE});
+        const locals = UtilsLib.fmtAdditionalData({isLoginPage : true}, {status: false, toastBody: constantsLib.loginPagePhrases.RESET_PASSWORD_LINK_EXPIRED_NOTE});
         res.render('index', { locals });
       }
     } else {
-      const locals = utils.fmtAdditionalData({isLoginPage : true}, {status: false, toastBody: constants.loginPagePhrases.RESET_PASSWORD_LINK_INVALID_NOTE});
+      const locals = UtilsLib.fmtAdditionalData({isLoginPage : true}, {status: false, toastBody: constantsLib.loginPagePhrases.RESET_PASSWORD_LINK_INVALID_NOTE});
       res.render('index', { locals });
     }
   });
 }
 
 const password_reset_verify_post = async (req, res) => {
-  utils.secureExecute(req, res, async (req, res) => {
+  UtilsLib.secureExecute(req, res, async (req, res) => {
     const {id, token} = req.params;
     let status;
     let toastBody;
-    const resetUser = await user.userById(id);
+    const resetUser = await userOps.userById(id);
 
     if (!resetUser) {
-      toastBody = constants.loginPagePhrases.RESET_PASSWORD_LINK_INVALID_NOTE;
+      toastBody = constantsLib.loginPagePhrases.RESET_PASSWORD_LINK_INVALID_NOTE;
       status    = false;
     } else {
       try {
@@ -181,16 +173,16 @@ const password_reset_verify_post = async (req, res) => {
         [status, toastBody] = userLib.validateResetPasswordForm(req);
 
         if (status) {
-          const saltHash = passport.genPassword(req?.body?.login_password_field);
-          await User.updateOne({ _id: resetUser._id }, { hash: saltHash.hash, salt: saltHash.salt });
-          toastBody = constants.loginPagePhrases.RESET_PASSWORD_SUCCESS_NOTE;
+          const saltHash = passportLib.genPassword(req?.body?.login_password_field);
+          await UserModel.updateOne({ _id: resetUser._id }, { hash: saltHash.hash, salt: saltHash.salt });
+          toastBody = constantsLib.loginPagePhrases.RESET_PASSWORD_SUCCESS_NOTE;
         }
       } catch(error) {
         status    = false;
-        toastBody = constants.loginPagePhrases.RESET_PASSWORD_LINK_EXPIRED_NOTE;
+        toastBody = constantsLib.loginPagePhrases.RESET_PASSWORD_LINK_EXPIRED_NOTE;
       }
     }
-    const locals = utils.fmtAdditionalData({isLoginPage: true}, {status, toastBody});
+    const locals = UtilsLib.fmtAdditionalData({isLoginPage: true}, {status, toastBody});
     res.render('index', { locals });
   });
 }
@@ -201,7 +193,7 @@ module.exports = {
   register_post,
   login_post,
   verify_get,
-  auth_google_get,
+  auth_google_protected_get,
   password_reset_get,
   password_reset_post,
   password_reset_verify_get,

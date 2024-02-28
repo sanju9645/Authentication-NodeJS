@@ -4,7 +4,7 @@
 %>
 
 <div class="space-y-2">
-  <label class="text-sm font-medium text-<%= locals.constants.colors.PORTAL_FORM_LABEL_COLOR %>-700 tracking-wide"> <%- locals.constants.loginPagePhrases.EMAIL_FIELD_LABEL %> </label>
+  <label class="text-sm font-medium text-<%= locals.constantsLib.colors.PORTAL_FORM_LABEL_COLOR %>-700 tracking-wide"> <%- locals.constantsLib.loginPagePhrases.EMAIL_FIELD_LABEL %> </label>
   <input 
     name="login_email_field" 
     id="login_email_field" 
@@ -12,6 +12,6 @@
     type="" 
     <% if (email) { %>value="<%= email %>"<% } %>
     <% if (emailAction) { %> <%= emailAction %><% } %>
-    placeholder="<%- locals.constants.loginPagePhrases.EMAIL_FIELD_PLACEHOLDER %>"
+    placeholder="<%- locals.constantsLib.loginPagePhrases.EMAIL_FIELD_PLACEHOLDER %>"
     >
 </div>

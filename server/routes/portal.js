@@ -26,8 +26,6 @@ router.get('/user/password-reset/:id/:token', portalController.password_reset_ve
 
 router.post('/user/password-reset/:id/:token', portalController.password_reset_verify_post);
 
-
-
 router.get('/auth/google',
   passport.authenticate('google', { 
     scope: ['email', 'profile'] 
@@ -36,14 +34,14 @@ router.get('/auth/google',
 
 router.get('/auth/google/callback', 
   passport.authenticate('google', { 
-    successRedirect: '/auth/protected',
+    successRedirect: '/auth/google/protected',
     failureRedirect: '/login' 
   })
 );
 
-router.get('/auth/protected', portalController.auth_google_get);
+router.get('/auth/google/protected', portalController.auth_google_protected_get);
 
-router.get('/auth/logout', (req, res) => {
+router.get('/auth/google/logout', (req, res) => {
   req.session.destroy();
   res.redirect('/');
 });
