@@ -7,15 +7,18 @@
 ## Let's Get This Party Started!
 
 - 🚀 Fire up your terminal and launch:
-  ```bash
+```bash
   npm init -y
-
+```
 
 ## 📦 Gathering the Magic Spells:
+
 Time to load up on potions by running the following command in your terminal. Imagine this as stuffing your backpack with all the magical ingredients you'll need for your journey.
 
+
 ```bash
-npm install body-parser connect-mongo dotenv express express-ejs-layouts express-session mongoose passport passport-jwt cors cookie-parser bcrypt google-auth-library ejs passport-google-oauth20 jsonwebtoken path inspirational-quotes crypto fs nodemailer uuid express-session
+  npm install body-parser connect-mongo dotenv express express-ejs-layouts express-session mongoose passport passport-jwt cors cookie-parser bcrypt google-auth-library ejs passport- google-oauth20 jsonwebtoken path inspirational-quotes crypto fs nodemailer uuid express-session
+```
 
 
 ## 🧙‍♂️ Sidekick Alert: Nodemon!
@@ -23,18 +26,29 @@ npm install body-parser connect-mongo dotenv express express-ejs-layouts express
 
 ```bash
 npm install nodemon --save-dev
-
+```
 
 ## 📜 The Secret Scroll (.env):
 📜 Craft a .env parchment filled with your arcane secrets (configs).
+
+## 🔐 Local Authentication Key Pair Generation
+
+For the secure operation of our local authentication mechanism, it's essential to generate a unique key pair. This key pair will be the cornerstone of ensuring secure data transactions between your application and the server.
+
+To conjure up this magical key pair, embark on the following incantation in your terminal:
+
+```bash
+node tools/generateKeypair
+```
 
 
 ## 🧙‍♀️ Invisibility Cloak (.gitignore):
 🧙‍♀️ Make your "node_modules/" and ".env" vanish from prying eyes!
 
-```plaintext
+  ```bash
 node_modules/
 .env
+```
 
 
 ## 🏰 Setting Up Camp with Grepper
@@ -57,7 +71,7 @@ This fortress will not only protect your data but also empower your application 
 
 ```plaintext
 MONGODB_URI=mongodb+srv://{username}:{password}@cluster0.lo3cgvx.mongodb.net/{database}
-
+```
 
 ## 🚪 Port to the Future
 
@@ -65,7 +79,7 @@ MONGODB_URI=mongodb+srv://{username}:{password}@cluster0.lo3cgvx.mongodb.net/{da
 
 ```plaintext
 PORT=3000
-
+```
 
 
 ## 📧 Council of Admins
@@ -74,7 +88,7 @@ PORT=3000
 
 ```plaintext
 ADMIN_EMAILS=s@gmail.com,sa@gmail.com,san@gmail.com
-
+```
 
 
 ## 🕊️ Pigeon Post Setup
@@ -84,7 +98,7 @@ ADMIN_EMAILS=s@gmail.com,sa@gmail.com,san@gmail.com
 ```plaintext
 AUTH_EMAIL={yourgmailid}@gmail.com
 AUTH_PASS={yourpassword}
-
+```
 
 
 
@@ -94,7 +108,7 @@ AUTH_PASS={yourpassword}
 
 ```plaintext
 HOME_URL=http://localhost:3000/
-
+```
 
 ## 📚 Google's Secret Library
 
@@ -109,7 +123,7 @@ Safeguard your client id and secret in the `.env` scroll.
 ```plaintext
 GOOGLE_AUTH_CLIENT_ID={client_id}.apps.googleusercontent.com
 GOOGLE_AUTH_CLIENT_SECRET={secret}
-
+```
 
 ## 🗝️ Mystical Session Secret
 
@@ -117,7 +131,7 @@ Concoct a powerful `EXPRESS_SESSION_SECRET` potion.
 
 ```plaintext
 EXPRESS_SESSION_SECRET={give a strong secret here}
-
+```
 
 
 ## Customize Your Castle:
@@ -136,6 +150,7 @@ PORTAL_FORM_LABEL_COLOR=green
 PORTAL_FORM_BUTTON_COLOR=green
 PORTAL_QUOTE_TEXT_COLOR=white
 PORTAL_SITE_NAME_TEXT_COLOR=white
+```
 
 
 
@@ -143,82 +158,6 @@ PORTAL_SITE_NAME_TEXT_COLOR=white
 
 
 
-
-
-
-
-
-Project Configuration
-
-1. Kickstart Your Project:
-   Run the command: npm init -y
-
-2. Install Magic Ingredients:
-   Execute: 
-   npm i body-parser connect-mongo dotenv express express-ejs-layouts express-session mongoose passport passport-jwt cors cookie-parser bcrypt google-auth-library ejs passport-google-oauth20 jsonwebtoken path inspirational-quotes crypto fs nodemailer uuid express-session
-
-3. Equip Your Developers:
-   Install Nodemon as a sidekick: npm i nodemon --save-dev
-
-4. Unveil the Secret (.env):
-   Craft a .env file with your special configurations.
-
-5. Conceal Your Secrets (.gitignore):
-   Shield sensitive stuff: node_modules/ and .env stay hidden.
-  
-  node_modules/
-  .env
-
-6. create new project 'Authentication-NodeJS' on mongoDB atlas
-
-7. Add the connection string on .env file
-    MONGODB_URI=mongodb+srv://{username}:{password}@cluster0.lo3cgvx.mongodb.net/{database}
-
-8. Add the PORT number on .env
-    PORT=3000
-
-9. Add the admin emails to ADMIN_EMAILS constants
-    ADMIN_EMAILS=s@gmail.com,sa@gmail.com,san@gmail.com
-
-10. Setup configuration for nodemailer
-    AUTH_EMAIL={yourgmailid}@gmail.com
-    AUTH_PASS={yourpassword}
-
-11. Add the home url or domain
-    HOME_URL=http://localhost:3000/
-
-
-12. Google Developer Console:
-
-Go to the Google Developer Console (https://developers.google.com/identity/sign-in/web/sign-in).
-Create OAuth 2.0 credentials with the redirect URI set to 'http://localhost:3000/auth/google/callback'.
-
-13. Store the client id and secret on .env file
-    GOOGLE_AUTH_CLIENT_ID = {cliend_id}.apps.googleusercontent.com
-    GOOGLE_AUTH_CLIENT_SECRET = {secret}
-
-14. Create a session secret
-    EXPRESS_SESSION_SECRET = {give a strong secret here}
-
-15.  Add the following to the .env file, you can change the value of the variable to change the design
-
-# To change the background image of login/index page paste the image in '/img/login/' and rename to 'index.jpeg'
-# /img/login/index.jpeg
-
-PORTAL_SITE_NAME=BurnBitBistro
-
-# use tailwind css colors
-PORTAL_PAGE_MAIN_COLOR=green
-PORTAL_BOX_MAIN_HEADING_COLOR=green
-PORTAL_BOX_SUB_HEADING_COLOR=green
-PORTAL_FORM_LABEL_COLOR=green
-PORTAL_FORM_BUTTON_COLOR=green
-PORTAL_QUOTE_TEXT_COLOR=white
-PORTAL_SITE_NAME_TEXT_COLOR=white
-
-# gray
-# PORTAL_BOX_SUB_HEADING_COLOR=gray
-# PORTAL_FORM_LABEL_COLOR=gray
 
 
 
@@ -342,37 +281,4 @@ Passport-JWT Implementation
 
 10. Call the middleware on the app.js
     app.use(passport.initialize());
-
-
-
-
--------------------------------------------------
-Production
--------------------------------------------------
-
-npm i
-
-create the .env file
-
-run 
-node tools/generateKeypair
-
-Add the email id and password on the .env file like below,
-
-# Auth email credentials
-AUTH_EMAIL=something@gmail.com
-AUTH_PASS=yourpassword
-
-Goto this link,
-https://myaccount.google.com/security
-
-Make sure that the 2 step verification is on 
-
-Then goto this link,
-https://myaccount.google.com/u/1/signinoptions/two-step-verification
-
-Create APP password
-
-Create a new APP with a name, copy the password
-
 
