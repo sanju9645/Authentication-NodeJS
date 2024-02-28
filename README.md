@@ -1,6 +1,173 @@
-# Authentication-NodeJS
-Authentication - JWT and  Google oauth20 using Passport JS
 
+# 🚀 Authentication-NodeJS 🚀
+### 🕵️‍♂️ Featuring: JWT & Google Oauth2.0 with Passport JS 🕵️‍♀️
+
+🎉 **Welcome to the Adventure of Setting Up Your Project!** 🎉
+
+## Let's Get This Party Started!
+
+- 🚀 Fire up your terminal and launch:
+```bash
+  npm init -y
+```
+
+## 📦 Gathering the Magic Spells:
+
+Time to load up on potions by running the following command in your terminal. Imagine this as stuffing your backpack with all the magical ingredients you'll need for your journey.
+
+
+```bash
+  npm install body-parser connect-mongo dotenv express express-ejs-layouts express-session mongoose passport passport-jwt cors cookie-parser bcrypt google-auth-library ejs passport- google-oauth20 jsonwebtoken path inspirational-quotes crypto fs nodemailer uuid express-session
+```
+
+
+## 🧙‍♂️ Sidekick Alert: Nodemon!
+🧙‍♂️ Summon your trusty companion with:
+
+```bash
+npm install nodemon --save-dev
+```
+
+## 📜 The Secret Scroll (.env):
+📜 Craft a .env parchment filled with your arcane secrets (configs).
+
+## 🔐 Local Authentication Key Pair Generation
+
+For the secure operation of our local authentication mechanism, it's essential to generate a unique key pair. This key pair will be the cornerstone of ensuring secure data transactions between your application and the server.
+
+To conjure up this magical key pair, embark on the following incantation in your terminal:
+
+```bash
+node tools/generateKeypair
+```
+
+
+## 🧙‍♀️ Invisibility Cloak (.gitignore):
+🧙‍♀️ Make your "node_modules/" and ".env" vanish from prying eyes!
+
+  ```bash
+node_modules/
+.env
+```
+
+
+## 🏰 Setting Up Camp with Grepper
+🏰 Create your fortress, **Authentication-NodeJS**, in the realm of MongoDB Atlas.
+
+To establish your stronghold:
+1. Navigate to [MongoDB Atlas](https://www.mongodb.com/cloud/atlas) and sign in or create an account.
+2. Create a new project and name it `Authentication-NodeJS`.
+3. Within your project, build a new cluster where your data will reside.
+4. Secure your cluster with a database user and whitelist your application's IP address.
+5. Conjure the connection string by choosing "Connect your application" and select the driver version relevant to your sorcery.
+6. Engrave this connection incantation into your `.env` scroll as `MONGODB_URI`, replacing `{username}`, `{password}`, and `{database}` with your specific credentials.
+
+This fortress will not only protect your data but also empower your application with the ancient wisdom of NoSQL databases.
+
+
+## 🔗 Magical Link
+
+🔗 Enchant a connection string in your .env scroll to link your fortress with the Atlas realm.
+
+```plaintext
+MONGODB_URI=mongodb+srv://{username}:{password}@cluster0.lo3cgvx.mongodb.net/{database}
+```
+
+## 🚪 Port to the Future
+
+🚪 Decide on a magical PORT number for your gateways.
+
+```plaintext
+PORT=3000
+```
+
+
+## 📧 Council of Admins
+
+📧 Gather the email scrolls of your admin wizards.
+
+```plaintext
+ADMIN_EMAILS=s@gmail.com,sa@gmail.com,san@gmail.com
+```
+
+
+## 🕊️ Pigeon Post Setup
+
+🕊️ Configure your owl (nodemailer) with your Gmail credentials for sending messages.
+
+```plaintext
+AUTH_EMAIL={yourgmailid}@gmail.com
+AUTH_PASS={yourpassword}
+```
+
+
+
+## 🏠 Homestead
+
+🏠 Establish your HOME_URL as the base of your operations.
+
+```plaintext
+HOME_URL=http://localhost:3000/
+```
+
+## 📚 Google's Secret Library
+
+Visit the mystical [Google Developer Console](https://console.developers.google.com/) and create OAuth 2.0 credentials. Remember, your secret base is `http://localhost:3000/auth/google/callback`.
+
+
+
+## 🔑 Enchanted Keys
+
+Safeguard your client id and secret in the `.env` scroll.
+
+```plaintext
+GOOGLE_AUTH_CLIENT_ID={client_id}.apps.googleusercontent.com
+GOOGLE_AUTH_CLIENT_SECRET={secret}
+```
+
+## 🗝️ Mystical Session Secret
+
+Concoct a powerful `EXPRESS_SESSION_SECRET` potion.
+
+```plaintext
+EXPRESS_SESSION_SECRET={give a strong secret here}
+```
+
+
+## Customize Your Castle:
+
+🏰 Want to change the look of your login chamber? Drop a majestic image in '/img/login/' and rename it to 'index.jpeg'.
+Declare the colors of your domain with Tailwind CSS spells in your .env scroll. Feel free to mix and match!
+
+```plaintext
+PORTAL_SITE_NAME=BurnBitBistro
+
+# use tailwind css colors
+PORTAL_PAGE_MAIN_COLOR=green
+PORTAL_BOX_MAIN_HEADING_COLOR=green
+PORTAL_BOX_SUB_HEADING_COLOR=green
+PORTAL_FORM_LABEL_COLOR=green
+PORTAL_FORM_BUTTON_COLOR=green
+PORTAL_QUOTE_TEXT_COLOR=white
+PORTAL_SITE_NAME_TEXT_COLOR=white
+```
+
+
+
+
+<br><br><br><br><br><br><br><br><br><br><br><br>
+
+
+
+
+
+
+
+
+
+
+
+Project - Development Kickstart
 
 1. Kickstart Your Project:
    Run the command: npm init -y
@@ -114,37 +281,4 @@ Passport-JWT Implementation
 
 10. Call the middleware on the app.js
     app.use(passport.initialize());
-
-
-
-
--------------------------------------------------
-Production
--------------------------------------------------
-
-npm i
-
-create the .env file
-
-run 
-node tools/generateKeypair
-
-Add the email id and password on the .env file like below,
-
-# Auth email credentials
-AUTH_EMAIL=something@gmail.com
-AUTH_PASS=yourpassword
-
-Goto this link,
-https://myaccount.google.com/security
-
-Make sure that the 2 step verification is on 
-
-Then goto this link,
-https://myaccount.google.com/u/1/signinoptions/two-step-verification
-
-Create APP password
-
-Create a new APP with a name, copy the password
-
 
