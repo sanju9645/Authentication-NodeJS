@@ -1,6 +1,234 @@
-# Authentication-NodeJS
-Authentication - JWT and  Google oauth20 using Passport JS
 
+# 🚀 Authentication-NodeJS 🚀
+### 🕵️‍♂️ Featuring: JWT & Google Oauth2.0 with Passport JS 🕵️‍♀️
+
+🎉 **Welcome to the Adventure of Setting Up Your Project!** 🎉
+
+## Let's Get This Party Started!
+
+- 🚀 Fire up your terminal and launch:
+  ```bash
+  npm init -y
+
+
+## 📦 Gathering the Magic Spells:
+Time to load up on potions by running the following command in your terminal. Imagine this as stuffing your backpack with all the magical ingredients you'll need for your journey.
+
+```bash
+npm install body-parser connect-mongo dotenv express express-ejs-layouts express-session mongoose passport passport-jwt cors cookie-parser bcrypt google-auth-library ejs passport-google-oauth20 jsonwebtoken path inspirational-quotes crypto fs nodemailer uuid express-session
+
+
+## 🧙‍♂️ Sidekick Alert: Nodemon!
+🧙‍♂️ Summon your trusty companion with:
+
+```bash
+npm install nodemon --save-dev
+
+
+## 📜 The Secret Scroll (.env):
+📜 Craft a .env parchment filled with your arcane secrets (configs).
+
+
+## 🧙‍♀️ Invisibility Cloak (.gitignore):
+🧙‍♀️ Make your "node_modules/" and ".env" vanish from prying eyes!
+
+```plaintext
+node_modules/
+.env
+
+
+## 🏰 Setting Up Camp with Grepper
+🏰 Create your fortress, **Authentication-NodeJS**, in the realm of MongoDB Atlas.
+
+To establish your stronghold:
+1. Navigate to [MongoDB Atlas](https://www.mongodb.com/cloud/atlas) and sign in or create an account.
+2. Create a new project and name it `Authentication-NodeJS`.
+3. Within your project, build a new cluster where your data will reside.
+4. Secure your cluster with a database user and whitelist your application's IP address.
+5. Conjure the connection string by choosing "Connect your application" and select the driver version relevant to your sorcery.
+6. Engrave this connection incantation into your `.env` scroll as `MONGODB_URI`, replacing `{username}`, `{password}`, and `{database}` with your specific credentials.
+
+This fortress will not only protect your data but also empower your application with the ancient wisdom of NoSQL databases.
+
+
+## 🔗 Magical Link
+
+🔗 Enchant a connection string in your .env scroll to link your fortress with the Atlas realm.
+
+```plaintext
+MONGODB_URI=mongodb+srv://{username}:{password}@cluster0.lo3cgvx.mongodb.net/{database}
+
+
+## 🚪 Port to the Future
+
+🚪 Decide on a magical PORT number for your gateways.
+
+```plaintext
+PORT=3000
+
+
+
+## 📧 Council of Admins
+
+📧 Gather the email scrolls of your admin wizards.
+
+```plaintext
+ADMIN_EMAILS=s@gmail.com,sa@gmail.com,san@gmail.com
+
+
+
+## 🕊️ Pigeon Post Setup
+
+🕊️ Configure your owl (nodemailer) with your Gmail credentials for sending messages.
+
+```plaintext
+AUTH_EMAIL={yourgmailid}@gmail.com
+AUTH_PASS={yourpassword}
+
+
+
+
+## 🏠 Homestead
+
+🏠 Establish your HOME_URL as the base of your operations.
+
+```plaintext
+HOME_URL=http://localhost:3000/
+
+
+## 📚 Google's Secret Library
+
+Visit the mystical [Google Developer Console](https://console.developers.google.com/) and create OAuth 2.0 credentials. Remember, your secret base is `http://localhost:3000/auth/google/callback`.
+
+
+
+## 🔑 Enchanted Keys
+
+Safeguard your client id and secret in the `.env` scroll.
+
+```plaintext
+GOOGLE_AUTH_CLIENT_ID={client_id}.apps.googleusercontent.com
+GOOGLE_AUTH_CLIENT_SECRET={secret}
+
+
+## 🗝️ Mystical Session Secret
+
+Concoct a powerful `EXPRESS_SESSION_SECRET` potion.
+
+```plaintext
+EXPRESS_SESSION_SECRET={give a strong secret here}
+
+
+
+## Customize Your Castle:
+
+🏰 Want to change the look of your login chamber? Drop a majestic image in '/img/login/' and rename it to 'index.jpeg'.
+Declare the colors of your domain with Tailwind CSS spells in your .env scroll. Feel free to mix and match!
+
+```plaintext
+PORTAL_SITE_NAME=BurnBitBistro
+
+# use tailwind css colors
+PORTAL_PAGE_MAIN_COLOR=green
+PORTAL_BOX_MAIN_HEADING_COLOR=green
+PORTAL_BOX_SUB_HEADING_COLOR=green
+PORTAL_FORM_LABEL_COLOR=green
+PORTAL_FORM_BUTTON_COLOR=green
+PORTAL_QUOTE_TEXT_COLOR=white
+PORTAL_SITE_NAME_TEXT_COLOR=white
+
+
+
+
+
+
+
+
+
+
+
+
+Project Configuration
+
+1. Kickstart Your Project:
+   Run the command: npm init -y
+
+2. Install Magic Ingredients:
+   Execute: 
+   npm i body-parser connect-mongo dotenv express express-ejs-layouts express-session mongoose passport passport-jwt cors cookie-parser bcrypt google-auth-library ejs passport-google-oauth20 jsonwebtoken path inspirational-quotes crypto fs nodemailer uuid express-session
+
+3. Equip Your Developers:
+   Install Nodemon as a sidekick: npm i nodemon --save-dev
+
+4. Unveil the Secret (.env):
+   Craft a .env file with your special configurations.
+
+5. Conceal Your Secrets (.gitignore):
+   Shield sensitive stuff: node_modules/ and .env stay hidden.
+  
+  node_modules/
+  .env
+
+6. create new project 'Authentication-NodeJS' on mongoDB atlas
+
+7. Add the connection string on .env file
+    MONGODB_URI=mongodb+srv://{username}:{password}@cluster0.lo3cgvx.mongodb.net/{database}
+
+8. Add the PORT number on .env
+    PORT=3000
+
+9. Add the admin emails to ADMIN_EMAILS constants
+    ADMIN_EMAILS=s@gmail.com,sa@gmail.com,san@gmail.com
+
+10. Setup configuration for nodemailer
+    AUTH_EMAIL={yourgmailid}@gmail.com
+    AUTH_PASS={yourpassword}
+
+11. Add the home url or domain
+    HOME_URL=http://localhost:3000/
+
+
+12. Google Developer Console:
+
+Go to the Google Developer Console (https://developers.google.com/identity/sign-in/web/sign-in).
+Create OAuth 2.0 credentials with the redirect URI set to 'http://localhost:3000/auth/google/callback'.
+
+13. Store the client id and secret on .env file
+    GOOGLE_AUTH_CLIENT_ID = {cliend_id}.apps.googleusercontent.com
+    GOOGLE_AUTH_CLIENT_SECRET = {secret}
+
+14. Create a session secret
+    EXPRESS_SESSION_SECRET = {give a strong secret here}
+
+15.  Add the following to the .env file, you can change the value of the variable to change the design
+
+# To change the background image of login/index page paste the image in '/img/login/' and rename to 'index.jpeg'
+# /img/login/index.jpeg
+
+PORTAL_SITE_NAME=BurnBitBistro
+
+# use tailwind css colors
+PORTAL_PAGE_MAIN_COLOR=green
+PORTAL_BOX_MAIN_HEADING_COLOR=green
+PORTAL_BOX_SUB_HEADING_COLOR=green
+PORTAL_FORM_LABEL_COLOR=green
+PORTAL_FORM_BUTTON_COLOR=green
+PORTAL_QUOTE_TEXT_COLOR=white
+PORTAL_SITE_NAME_TEXT_COLOR=white
+
+# gray
+# PORTAL_BOX_SUB_HEADING_COLOR=gray
+# PORTAL_FORM_LABEL_COLOR=gray
+
+
+
+
+
+
+
+
+
+Project - Development Kickstart
 
 1. Kickstart Your Project:
    Run the command: npm init -y
