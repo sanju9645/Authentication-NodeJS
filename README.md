@@ -157,6 +157,45 @@ PORTAL_SITE_NAME_TEXT_COLOR=white
 
 <br><br><br><br><br><br><br><br><br><br><br><br>
 
+```plaintext
+PORT=3000
+
+MONGODB_URI=mongodb+srv://{username}:{password}@cluster0.lo3cgvx.mongodb.net/{database}
+
+ADMIN_EMAILS=s@gmail.com,sa@gmail.com,sanju@gmail.com
+
+# Auth email credentials
+AUTH_EMAIL=burnbitbistro@gmail.com
+AUTH_PASS=weqxxafyedpvcato
+
+HOME_URL=http://localhost:3000/
+
+
+GOOGLE_AUTH_CLIENT_ID = {client_id}.apps.googleusercontent.com
+GOOGLE_AUTH_CLIENT_SECRET = {secret}
+
+EXPRESS_SESSION_SECRET = {SECRET}
+
+JWT_SECRET = {SECRET}
+
+# To change the background image of login/index page paste the image in '/img/login/' and rename to 'index.jpeg'
+# /img/login/index.jpeg
+
+PORTAL_SITE_NAME=BurnBitBistro
+
+# use tailwind css colors
+PORTAL_PAGE_MAIN_COLOR=green
+PORTAL_BOX_MAIN_HEADING_COLOR=green
+PORTAL_BOX_SUB_HEADING_COLOR=green
+PORTAL_FORM_LABEL_COLOR=green
+PORTAL_FORM_BUTTON_COLOR=green
+PORTAL_QUOTE_TEXT_COLOR=white
+PORTAL_SITE_NAME_TEXT_COLOR=white
+
+# gray
+# PORTAL_BOX_SUB_HEADING_COLOR=gray
+# PORTAL_FORM_LABEL_COLOR=gray
+```
 
 
 
@@ -164,7 +203,7 @@ PORTAL_SITE_NAME_TEXT_COLOR=white
 
 
 
-
+<br><br><br><br><br><br><br><br><br><br><br><br>
 
 
 Project - Development Kickstart
